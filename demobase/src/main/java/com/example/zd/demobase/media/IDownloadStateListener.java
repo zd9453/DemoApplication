@@ -9,7 +9,7 @@ public interface IDownloadStateListener {
     /**
      * 下载状态改变
      *
-     * @param state
+     * @param state 当前下载状态
      */
     void downloadStateChange(@DownloadState int state);
 }
