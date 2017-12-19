@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.example.zd.demoapplication.activity.ConstraintLayoutActivity;
 import com.example.zd.demoapplication.activity.CoordinatorLayoutActivity;
+import com.example.zd.demoapplication.activity.CreateViewActivity;
 import com.example.zd.demoapplication.activity.MediaActivity;
 import com.example.zd.demoapplication.activity.TimerViewActivity;
 
@@ -76,4 +77,8 @@ public class MainJumpActivity extends AppCompatActivity {
     }
 
 
+    public void button5(View view) {
+        Intent intent = new Intent(this, CreateViewActivity.class);
+        startActivity(intent);
+    }
 }

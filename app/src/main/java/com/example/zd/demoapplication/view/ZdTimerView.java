@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
@@ -64,4 +65,36 @@ public class ZdTimerView extends View {
         super.onDraw(canvas);
         canvas.drawText("this is my view", 0, 10, mPaint);
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Log.d(TAG, "onTouchEvent: ------------- ACTION_DOWN");
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.d(TAG, "onTouchEvent: ------------- ACTION_MOVE");
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d(TAG, "onTouchEvent: ------------- ACTION_UP");
+                break;
+            default:
+                break;
+        }
+
+        return super.onTouchEvent(event);
+    }
+
+    /**
+     * 分发事件
+     *
+     * @param event .
+     * @return .
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        return super.dispatchTouchEvent(event);
+    }
+
 }

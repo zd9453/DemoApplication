@@ -28,7 +28,8 @@
 
         <service android:name=".activity.media.MusicPlayService" />
 
-        <activity android:name=".activity.TimerViewActivity"></activity>
+        <activity android:name=".activity.TimerViewActivity" />
+        <activity android:name=".activity.CreateViewActivity"></activity>
     </application>
 
 </manifest>
