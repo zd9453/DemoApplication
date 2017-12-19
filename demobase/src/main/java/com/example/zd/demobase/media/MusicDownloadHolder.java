@@ -1,11 +1,11 @@
-package com.example.zd.demoapplication.activity.media;
+package com.example.zd.demobase.media;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.example.zd.demobase.utils.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
@@ -26,21 +26,31 @@ import zlc.season.rxdownload2.entity.DownloadFlag;
 public class MusicDownloadHolder {
 
     private static final String TAG = "MusicDownloadHolder";
+    /**
+     * 定义下载状态------值和RxDownload的状态值保持一致
+     */
+    public static final int FLAG_NORMAL = 9990;//未下载
+    public static final int FLAG_WAITING = 9991;//等待中
+    public static final int FLAG_STARTED = 9992;//已开始下载
+    public static final int FLAG_CANCELED = 9994;//已取消
+    public static final int FLAG_COMPLETED = 9995;//已完成
+    public static final int FLAG_FAILED = 9996;//下载失败
+
     private volatile static MusicDownloadHolder musicDownloadHolder;
-    private Context context;
     private RxPermissions rxPermissions;//权限请求
     private RxDownload rxDownload;//下载
     //    private Disposable disposable;
-    private DownloadStateListener downloadStateListener;
+    private IDownloadStateListener downloadStateListener;
 
-    public void setDownloadStateListener(DownloadStateListener downloadStateListener) {
+    public void setDownloadStateListener(IDownloadStateListener downloadStateListener) {
         this.downloadStateListener = downloadStateListener;
     }
 
     private MusicDownloadHolder(Context context) {
-        this.context = context.getApplicationContext();
-        rxPermissions = new RxPermissions((Activity) context);
-        rxDownload = RxDownload.getInstance(context);
+        Context applicationContext = context.getApplicationContext();
+        rxPermissions = new RxPermissions((Activity) applicationContext);
+        rxDownload = RxDownload.getInstance(applicationContext);
+        context = null;
     }
 
     public static MusicDownloadHolder newInstance(Context context) {
@@ -79,9 +89,9 @@ public class MusicDownloadHolder {
                         if (aBoolean) {//有权限
                             downloading(url);
                         } else {//拒绝权限
-                            Toast.makeText(context, "内存读写权限被拒绝，下载失败", Toast.LENGTH_SHORT).show();
+                            ToastUtils.showShortT("内存读写权限被拒绝，下载失败");
                             if (downloadStateListener != null) {
-                                downloadStateListener.downloadStateChange(DownloadFlag.FAILED);
+                                downloadStateListener.downloadStateChange(FLAG_FAILED);
                             }
                         }
                     }
@@ -115,31 +125,47 @@ public class MusicDownloadHolder {
                         switch (downloadEvent.getFlag()) {
                             case DownloadFlag.NORMAL://未下载
                                 Log.d(TAG, "accept: -------------- 未下载");
+                                if (downloadStateListener != null) {
+                                    //状态回调出去
+                                    downloadStateListener.downloadStateChange(FLAG_NORMAL);
+                                }
                                 break;
                             case DownloadFlag.WAITING://等待中
                                 Log.d(TAG, "accept: -------------- 等待中");
+                                if (downloadStateListener != null) {
+                                    downloadStateListener.downloadStateChange(FLAG_WAITING);
+                                }
                                 break;
                             case DownloadFlag.STARTED://已开始下载
                                 Log.d(TAG, "accept: -------------- 已开始下载");
+                                if (downloadStateListener != null) {
+                                    downloadStateListener.downloadStateChange(FLAG_STARTED);
+                                }
                                 break;
                             case DownloadFlag.CANCELED://已取消
                                 Log.d(TAG, "accept: -------------- 已取消");
                                 deleteFile(url);
+                                if (downloadStateListener != null) {
+                                    downloadStateListener.downloadStateChange(FLAG_CANCELED);
+                                }
                                 break;
                             case DownloadFlag.COMPLETED://已完成
                                 Log.d(TAG, "accept: -------------- 已完成");
+                                if (downloadStateListener != null) {
+                                    downloadStateListener.downloadStateChange(FLAG_COMPLETED);
+                                }
                                 break;
                             case DownloadFlag.FAILED://下载失败
                                 Log.d(TAG, "accept: -------------- 下载失败");
                                 deleteFile(url);
+                                if (downloadStateListener != null) {
+                                    downloadStateListener.downloadStateChange(FLAG_FAILED);
+                                }
                                 break;
                             default:
                                 break;
                         }
-                        if (downloadStateListener != null) {
-                            //状态回调出去
-                            downloadStateListener.downloadStateChange(downloadEvent.getFlag());
-                        }
+
                     }
                 });
     }
@@ -154,10 +180,4 @@ public class MusicDownloadHolder {
         }
     }
 
-    /**
-     * 将下载状态回调出去更新UI
-     */
-    public interface DownloadStateListener {
-        void downloadStateChange(int state);
-    }
 }

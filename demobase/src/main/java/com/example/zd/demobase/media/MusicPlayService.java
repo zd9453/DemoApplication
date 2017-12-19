@@ -1,4 +1,4 @@
-package com.example.zd.demoapplication.activity.media;
+package com.example.zd.demobase.media;
 
 import android.app.Service;
 import android.content.Intent;
@@ -8,14 +8,11 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 
 import zlc.season.rxdownload2.RxDownload;
 
@@ -227,13 +224,4 @@ public class MusicPlayService extends Service implements
             return MusicPlayService.this;
         }
     }
-
-    /**
-     * 限定发送广播的参数
-     */
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({STATE_START, STATE_PAUSE, STATE_COMPLETION, STATE_ERROR})
-    @interface MusicState {
-    }
-
 }
