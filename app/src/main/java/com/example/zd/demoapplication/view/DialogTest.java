@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.example.zd.demoapplication.R;
 
 /**
- *
+ * test
  * Created by zhangdong on 2017/12/12 0012.
  */
 
@@ -35,7 +35,6 @@ public class DialogTest extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.activity_constraint_layout1, container, false);
-        return inflate;
+        return inflater.inflate(R.layout.activity_constraint_layout1, container, false);
     }
 }

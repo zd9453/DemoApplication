@@ -27,15 +27,23 @@ public class CreateViewActivity extends AppCompatActivity implements View.OnClic
         Log.d(TAG, "onCreate: --------" + dicView.getClass().getName());
     }
 
-
     public void moveTo(View view) {
         ObjectAnimator translationX = ObjectAnimator.ofFloat(testView, "translationX", 100);
         translationX.setDuration(3000);
         translationX.start();
+
+        boolean b = SizeUtils.viewClickSelf(testView);
+        Log.d(TAG, "moveTo:  ---------- " + b);
     }
 
     @Override
     public void onClick(View v) {
         Log.d(TAG, "onClick: ----------------");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.right_in,R.anim.left_out);
     }
 }

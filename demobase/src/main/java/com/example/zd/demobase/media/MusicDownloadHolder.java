@@ -48,7 +48,7 @@ public class MusicDownloadHolder {
 
     private MusicDownloadHolder(Context context) {
         Context applicationContext = context.getApplicationContext();
-        rxPermissions = new RxPermissions((Activity) applicationContext);
+        rxPermissions = new RxPermissions((Activity) context);
         rxDownload = RxDownload.getInstance(applicationContext);
         context = null;
     }

@@ -2,6 +2,7 @@ package com.example.zd.demoapplication.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -9,6 +10,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+
+import com.example.zd.demobase.utils.SizeUtils;
 
 /**
  * 自定义一个倒计时的view
@@ -19,6 +22,7 @@ public class ZdTimerView extends View {
     private static final String TAG = "TimerView";
     private Paint mPaint;
     private int scaledEdgeSlop;//最小的可识别滑动距离
+    private String info = "this is my view";
 
     public ZdTimerView(Context context) {
         super(context);
@@ -37,6 +41,8 @@ public class ZdTimerView extends View {
 
     private void init() {
         mPaint = new Paint();
+        mPaint.setColor(Color.RED);
+        mPaint.setTextSize(SizeUtils.dpToPx(14));
         scaledEdgeSlop = ViewConfiguration.get(getContext()).getScaledEdgeSlop();
         Log.d(TAG, "init: -----------" + scaledEdgeSlop);
     }
@@ -46,24 +52,34 @@ public class ZdTimerView extends View {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        int w = MeasureSpec.getSize(widthMeasureSpec);
+        int h = MeasureSpec.getSize(heightMeasureSpec);
 
+        Log.d(TAG, "onMeasure: --------- " + (int) mPaint.measureText(info) + "  " + ((int) mPaint.getFontMetrics().bottom));
+        Paint.FontMetrics metrics = mPaint.getFontMetrics();
+        float ascent = metrics.ascent;
+        float bottom = metrics.bottom;
+        float descent = metrics.descent;
+        float leading = metrics.leading;
+        float top = metrics.top;
+        Log.d(TAG, "onMeasure: ---------ascent = " + ascent + " bottom = " + bottom + " descent = " + descent + " leading = " + leading + " top = " + top);
 
         if (widthMode == MeasureSpec.AT_MOST && heightMode == MeasureSpec.AT_MOST) {
-            measure(widthSize, heightSize);
+            Log.d(TAG, "onMeasure: -------------- 2");
+            setMeasuredDimension((int) (mPaint.measureText(info)), (int) (mPaint.getFontMetrics().bottom - mPaint.getFontMetrics().top));
         } else if (widthMode == MeasureSpec.AT_MOST) {
-            measure(widthSize, heightMeasureSpec);
+            Log.d(TAG, "onMeasure: --------------- 1w");
+            setMeasuredDimension((int) mPaint.measureText(info), h);
         } else if (heightMode == MeasureSpec.AT_MOST) {
-            measure(widthMeasureSpec, heightSize);
-        } else
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            Log.d(TAG, "onMeasure: ---------------- 1h");
+            setMeasuredDimension(w, (int) (mPaint.getFontMetrics().bottom - mPaint.getFontMetrics().top));
+        }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawText("this is my view", 0, 10, mPaint);
+        canvas.drawText(info, 0, getHeight() - (mPaint.getFontMetrics().bottom - mPaint.getFontMetrics().descent), mPaint);
     }
 
     @Override

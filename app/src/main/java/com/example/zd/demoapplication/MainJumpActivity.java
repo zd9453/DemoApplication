@@ -40,6 +40,7 @@ public class MainJumpActivity extends AppCompatActivity {
     public void button2(View view) {
         Intent intent = new Intent(this, ConstraintLayoutActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.in_sc, R.anim.left_out);
     }
 
     public void button3(View view) {
@@ -50,6 +51,7 @@ public class MainJumpActivity extends AppCompatActivity {
     public void button4(View view) {
         Intent intent = new Intent(this, TimerViewActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @Override
@@ -80,5 +82,7 @@ public class MainJumpActivity extends AppCompatActivity {
     public void button5(View view) {
         Intent intent = new Intent(this, CreateViewActivity.class);
         startActivity(intent);
+//        overridePendingTransition(R.anim.in_sc, R.anim.out_sc);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 }

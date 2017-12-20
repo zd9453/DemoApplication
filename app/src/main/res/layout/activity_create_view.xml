@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.zd.demoapplication.activity.CreateViewActivity">
 
     <Button
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="moveTo"
         android:text="move"
         android:textAllCaps="false"
-        android:onClick="moveTo"
-        android:layout_height="wrap_content" />
+        android:textSize="14dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <com.example.zd.demoapplication.view.ZdTimerView
         android:id="@+id/test_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="#ff0000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#ff0" />
+
+</LinearLayout>

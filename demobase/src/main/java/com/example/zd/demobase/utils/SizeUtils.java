@@ -45,4 +45,14 @@ public class SizeUtils {
                 .findViewById(android.R.id.content))
                 .getChildAt(0);
     }
+
+    /**
+     * view 自动执行一次点击事件
+     *
+     * @param view .
+     * @return 是否执行
+     */
+    public static boolean viewClickSelf(View view) {
+        return view.performClick();
+    }
 }
