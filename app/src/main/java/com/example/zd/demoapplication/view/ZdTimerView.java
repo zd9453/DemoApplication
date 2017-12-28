@@ -1,9 +1,11 @@
 package com.example.zd.demoapplication.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -11,6 +13,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import com.example.zd.demoapplication.BuildConfig;
+import com.example.zd.demoapplication.R;
 import com.example.zd.demobase.utils.SizeUtils;
 
 /**
@@ -23,6 +27,15 @@ public class ZdTimerView extends View {
     private Paint mPaint;
     private int scaledEdgeSlop;//最小的可识别滑动距离
     private String info = "this is my view";
+    private Drawable drawable;
+
+    public void setInfo(String info) {
+        this.info = info;
+        if (mPaint != null) {
+            mPaint.setTextScaleX(1.0f);
+        }
+        invalidate();
+    }
 
     public ZdTimerView(Context context) {
         super(context);
@@ -31,11 +44,29 @@ public class ZdTimerView extends View {
 
     public ZdTimerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ZdTimerView, 0, 0);
+        int string = typedArray.getInt(R.styleable.ZdTimerView_showInfo, 1);
+        if (string == 1) {
+            info = "this is test information for my view";
+        } else if (string == 2) {
+            info = "this is test information";
+        }
+        drawable = typedArray.getDrawable(R.styleable.ZdTimerView_img);
+        typedArray.recycle();
         init();
     }
 
     public ZdTimerView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ZdTimerView, 0, 0);
+        int string = typedArray.getInt(R.styleable.ZdTimerView_showInfo, 1);
+        if (string == 1) {
+            info = "this is test information for my view";
+        } else if (string == 2) {
+            info = "this is test information";
+        }
+        drawable = typedArray.getDrawable(R.styleable.ZdTimerView_img);
+        typedArray.recycle();
         init();
     }
 
@@ -55,6 +86,11 @@ public class ZdTimerView extends View {
         int w = MeasureSpec.getSize(widthMeasureSpec);
         int h = MeasureSpec.getSize(heightMeasureSpec);
 
+        int paddingLeft = getPaddingLeft();
+        int paddingBottom = getPaddingBottom();
+        int paddingRight = getPaddingRight();
+        int paddingTop = getPaddingTop();
+
         Log.d(TAG, "onMeasure: --------- " + (int) mPaint.measureText(info) + "  " + ((int) mPaint.getFontMetrics().bottom));
         Paint.FontMetrics metrics = mPaint.getFontMetrics();
         float ascent = metrics.ascent;
@@ -65,21 +101,32 @@ public class ZdTimerView extends View {
         Log.d(TAG, "onMeasure: ---------ascent = " + ascent + " bottom = " + bottom + " descent = " + descent + " leading = " + leading + " top = " + top);
 
         if (widthMode == MeasureSpec.AT_MOST && heightMode == MeasureSpec.AT_MOST) {
-            Log.d(TAG, "onMeasure: -------------- 2");
-            setMeasuredDimension((int) (mPaint.measureText(info)), (int) (mPaint.getFontMetrics().bottom - mPaint.getFontMetrics().top));
+            setMeasuredDimension((int) (mPaint.measureText(info)) + paddingLeft + paddingRight,
+                    (int) (mPaint.getFontMetrics().bottom - mPaint.getFontMetrics().top) + paddingTop + paddingBottom);
         } else if (widthMode == MeasureSpec.AT_MOST) {
-            Log.d(TAG, "onMeasure: --------------- 1w");
-            setMeasuredDimension((int) mPaint.measureText(info), h);
+            setMeasuredDimension((int) mPaint.measureText(info) + paddingLeft + paddingRight, h);
         } else if (heightMode == MeasureSpec.AT_MOST) {
-            Log.d(TAG, "onMeasure: ---------------- 1h");
-            setMeasuredDimension(w, (int) (mPaint.getFontMetrics().bottom - mPaint.getFontMetrics().top));
+            setMeasuredDimension(w,
+                    (int) (mPaint.getFontMetrics().bottom - mPaint.getFontMetrics().top) + paddingTop + paddingBottom);
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        canvas.drawText(info, 0, getHeight() - (mPaint.getFontMetrics().bottom - mPaint.getFontMetrics().descent), mPaint);
+        int paddingLeft = getPaddingLeft();
+        int paddingRight = getPaddingRight();
+        int paddingTop = getPaddingTop();
+        int paddingBottom = getPaddingBottom();
+
+
+        canvas.drawText(info, paddingLeft, getHeight() - paddingBottom, mPaint);
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        if (BuildConfig.DEBUG) {//debug模式
+            canvas.drawColor(Color.parseColor("#5500ff00"));
+        }
     }
 
     @Override

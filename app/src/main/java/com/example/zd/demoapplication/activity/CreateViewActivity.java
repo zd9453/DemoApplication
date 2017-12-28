@@ -32,6 +32,8 @@ public class CreateViewActivity extends AppCompatActivity implements View.OnClic
         translationX.setDuration(3000);
         translationX.start();
 
+//        testView.setInfo("测试显示汉字折什么效果");
+
         boolean b = SizeUtils.viewClickSelf(testView);
         Log.d(TAG, "moveTo:  ---------- " + b);
     }
@@ -44,6 +46,6 @@ public class CreateViewActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 }

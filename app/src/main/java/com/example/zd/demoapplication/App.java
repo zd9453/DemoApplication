@@ -2,6 +2,8 @@ package com.example.zd.demoapplication;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.util.Log;
 
 /**
  * Application
@@ -11,6 +13,7 @@ import android.content.Context;
 public class App extends Application {
 
     private static Context mContext;
+    private static final String TAG = "App";
 
     public static Context getmContext() {
         return mContext;
@@ -20,5 +23,18 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
+
+        Log.d(TAG, "onCreate: --------------" + BuildConfig.DEBUG);
+
+//        boolean debug = getDebug();
+//        Log.d(TAG, "onCreate: -------------- isDebug = " + debug);
+    }
+
+    private boolean getDebug() {
+
+        ApplicationInfo info = this.getApplicationInfo();
+
+        return (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+
     }
 }

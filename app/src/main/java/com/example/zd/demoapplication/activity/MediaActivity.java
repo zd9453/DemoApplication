@@ -134,8 +134,10 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
         super.onDestroy();
 
         //离开页面时讲回调监听置空，防止再回调更新UI崩溃
-        musicDownloadHolder.setDownloadStateListener(null);
-        musicDownloadHolder = null;
+        if (musicDownloadHolder != null) {
+            musicDownloadHolder.setDownloadStateListener(null);
+            musicDownloadHolder = null;
+        }
 
         if (isBind) {
             unregisterReceiver(receiver);

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ZdTimerView">
+        <attr name="showInfo" format="integer|dimension">
+            <flag name="Test" value="1" />
+            <flag name="changTe" value="2" />
+        </attr>
+        <attr name="img" format="integer|reference|color|dimension" />
+    </declare-styleable>
+</resources>

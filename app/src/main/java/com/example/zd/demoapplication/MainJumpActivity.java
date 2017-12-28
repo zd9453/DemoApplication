@@ -10,7 +10,10 @@ import com.example.zd.demoapplication.activity.ConstraintLayoutActivity;
 import com.example.zd.demoapplication.activity.CoordinatorLayoutActivity;
 import com.example.zd.demoapplication.activity.CreateViewActivity;
 import com.example.zd.demoapplication.activity.MediaActivity;
+import com.example.zd.demoapplication.activity.NotificationActivity;
 import com.example.zd.demoapplication.activity.TimerViewActivity;
+import com.example.zd.demoapplication.activity.VideoTest2Activity;
+import com.example.zd.demoapplication.activity.VideoTestActivity;
 
 public class MainJumpActivity extends AppCompatActivity {
 
@@ -84,5 +87,21 @@ public class MainJumpActivity extends AppCompatActivity {
         startActivity(intent);
 //        overridePendingTransition(R.anim.in_sc, R.anim.out_sc);
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
+    }
+
+    public void button6(View view) {
+        Intent intent = new Intent(this, NotificationActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+    }
+
+    public void button7(View view) {
+        Intent intent = new Intent(this, VideoTestActivity.class);
+        startActivity(intent);
+    }
+
+    public void button8(View view) {
+        Intent intent = new Intent(this, VideoTest2Activity.class);
+        startActivity(intent);
     }
 }

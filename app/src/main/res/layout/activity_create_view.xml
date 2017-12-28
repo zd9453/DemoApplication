@@ -16,10 +16,21 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <com.example.zd.demoapplication.view.ZdTimerView
+    <com.example.zd.demoapplication.view.ZdTimerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/test_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#ff0" />
+        android:background="#ff0"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        app:showInfo="Test" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/test" />
 
 </LinearLayout>

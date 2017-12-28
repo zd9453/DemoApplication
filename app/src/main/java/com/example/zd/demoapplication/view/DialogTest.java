@@ -18,9 +18,6 @@ public class DialogTest extends DialogFragment {
 
     private static volatile DialogTest mDialog = null;
 
-    private DialogTest() {
-    }
-
     public static DialogTest newInstance() {
         if (mDialog == null) {
             synchronized (DialogTest.class) {
