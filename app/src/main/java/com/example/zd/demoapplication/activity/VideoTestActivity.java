@@ -28,6 +28,7 @@ public class VideoTestActivity extends AppCompatActivity implements View.OnClick
     public static final int VIDEO_CODE = 0x1;
     private static final int P_REQUESTCODE = 0x2;
     private static final int P_SET = 0x3;
+    PermissionsUtils permissionsUtils;
 
     String[] permissions = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -45,6 +46,10 @@ public class VideoTestActivity extends AppCompatActivity implements View.OnClick
         video = (VideoView) findViewById(R.id.video);
 
         con.setOnClickListener(this);
+        permissionsUtils = new PermissionsUtils(this);
+
+        permissionsUtils.getPath();
+
     }
 
     @Override
@@ -81,7 +86,6 @@ public class VideoTestActivity extends AppCompatActivity implements View.OnClick
 //
 //            startActivityForResult(intent, P_SET);
 
-            PermissionsUtils permissionsUtils = new PermissionsUtils(this);
             permissionsUtils.startActivitySetting(this, P_SET);
 
         } else {
@@ -183,7 +187,6 @@ public class VideoTestActivity extends AppCompatActivity implements View.OnClick
                 con.setText(uri.toString());
             }
         } else if (requestCode == P_SET) {
-            PermissionsUtils permissionsUtils = new PermissionsUtils(this);
             boolean check = permissionsUtils.check(permissions);
             Log.d(TAG, "onActivityResult: --------------" + check);
         }

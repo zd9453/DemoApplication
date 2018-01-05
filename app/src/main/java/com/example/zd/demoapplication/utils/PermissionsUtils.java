@@ -5,15 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
+
+import java.io.File;
 
 /**
+ * 处理一些权限检查
  * Created by zhangdong on 2017/12/28 0028.
  */
 
 public class PermissionsUtils {
 
+    private static final String TAG = "PermissionsUtils";
     private static final String URI_HEAD = "package:";
     private final Context mContext;
 
@@ -55,5 +61,35 @@ public class PermissionsUtils {
 //            startActivity(intent);
 
         activity.startActivityForResult(intent, requestCode);
+    }
+
+    public void getPath() {
+        //获取外部存储设备的当前状态，是否存在，是否可读写
+        String state = Environment.getExternalStorageState();
+        Log.d(TAG, "getPath: -------getExternalStorageState----" + state);
+
+        Log.d(TAG, "getPath: 00--------isExternalStorageRemovable--" + Environment.isExternalStorageRemovable());
+
+        Log.d(TAG, "getPath: ---------isExternalStorageEmulated-" + Environment.isExternalStorageEmulated());
+
+        File file = Environment.getDownloadCacheDirectory();
+        Log.d(TAG, "getPath: ------getDownloadCacheDirectory---" + file.getAbsolutePath());
+
+        //获取应用内部缓存目录
+        File cacheDir = mContext.getCacheDir();
+        Log.d(TAG, "getPath: -------------getCacheDir--" + cacheDir.getAbsolutePath());
+
+        File externalCacheDir = mContext.getExternalCacheDir();
+        Log.d(TAG, "getPath: ------------getExternalCacheDir -   " + externalCacheDir.getAbsolutePath() + "   ---  " + externalCacheDir.getPath());
+
+
+
+
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+            Log.d(TAG, "getPath: ----------" + "MEDIA_MOUNTED");
+        } else {
+            Log.d(TAG, "getPath: -----------------");
+        }
     }
 }

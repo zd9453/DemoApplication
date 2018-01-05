@@ -2,4 +2,13 @@
     <string name="app_name">DemoApplication</string>
 
     <string name="test">this is test information for my view</string>
+
+    <string name="unit_year">年</string>
+
+    <string name="unit_month">月</string>
+
+    <string name="unit_day">日</string>
+
+    <string name="all">全部</string>
+
 </resources>

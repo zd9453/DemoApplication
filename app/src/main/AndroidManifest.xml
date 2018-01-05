@@ -40,7 +40,9 @@
             android:name=".activity.NotificationActivity"
             android:launchMode="singleTask" />
         <activity android:name=".activity.VideoTestActivity" />
-        <activity android:name=".activity.VideoTest2Activity"></activity>
+        <activity android:name=".activity.VideoTest2Activity" />
+        <activity android:name=".activity.FileTestActivity" />
+        <activity android:name=".activity.PickerTestActivity"></activity>
     </application>
 
 </manifest>

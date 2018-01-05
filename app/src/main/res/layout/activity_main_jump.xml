@@ -50,6 +50,16 @@
             android:onClick="button8"
             android:text="video2" />
 
+        <Button
+            style="@style/jump_button_style"
+            android:onClick="button9"
+            android:text="File" />
+
+        <Button
+            style="@style/jump_button_style"
+            android:onClick="button10"
+            android:text="PickerView" />
+
 
     </LinearLayout>
 

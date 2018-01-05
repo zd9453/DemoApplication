@@ -9,8 +9,10 @@ import android.view.View;
 import com.example.zd.demoapplication.activity.ConstraintLayoutActivity;
 import com.example.zd.demoapplication.activity.CoordinatorLayoutActivity;
 import com.example.zd.demoapplication.activity.CreateViewActivity;
+import com.example.zd.demoapplication.activity.FileTestActivity;
 import com.example.zd.demoapplication.activity.MediaActivity;
 import com.example.zd.demoapplication.activity.NotificationActivity;
+import com.example.zd.demoapplication.activity.PickerTestActivity;
 import com.example.zd.demoapplication.activity.TimerViewActivity;
 import com.example.zd.demoapplication.activity.VideoTest2Activity;
 import com.example.zd.demoapplication.activity.VideoTestActivity;
@@ -103,5 +105,13 @@ public class MainJumpActivity extends AppCompatActivity {
     public void button8(View view) {
         Intent intent = new Intent(this, VideoTest2Activity.class);
         startActivity(intent);
+    }
+
+    public void button9(View view) {
+        startActivity(new Intent(this, FileTestActivity.class));
+    }
+
+    public void button10(View view) {
+        startActivity(new Intent(this, PickerTestActivity.class));
     }
 }
