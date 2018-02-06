@@ -26,10 +26,6 @@ public class TimerUtils implements Animator.AnimatorListener {
     private ObjectAnimator objectAnimator;
     private TimerListener timerListener;
 
-    public void setTimerListener(TimerListener timerListener) {
-        this.timerListener = timerListener;
-    }
-
     private TimerUtils() {
     }
 
@@ -46,6 +42,10 @@ public class TimerUtils implements Animator.AnimatorListener {
         return instance;
     }
 
+    public void setTimerListener(TimerListener timerListener) {
+        this.timerListener = timerListener;
+    }
+
     /**
      * 开始倒计时
      *
@@ -60,6 +60,14 @@ public class TimerUtils implements Animator.AnimatorListener {
         objectAnimator.start();
     }
 
+    private static class TextType implements TypeEvaluator<Integer> {
+        @Override
+        public Integer evaluate(float fraction, Integer startValue, Integer endValue) {
+            int v = startValue - (int) ((startValue - endValue) * fraction);
+            return v;
+        }
+    }
+
     /**
      * 提交停止倒计时
      */
@@ -71,7 +79,6 @@ public class TimerUtils implements Animator.AnimatorListener {
             objectAnimator.addListener(null);
             objectAnimator = null;
         }
-
         if (timerListener != null) {
             timerListener = null;
         }
@@ -109,19 +116,17 @@ public class TimerUtils implements Animator.AnimatorListener {
         }
     }
 
-    private static class TextType implements TypeEvaluator<Integer> {
-        @Override
-        public Integer evaluate(float fraction, Integer startValue, Integer endValue) {
-            int v = startValue - (int) ((startValue - endValue) * fraction);
-            return v;
-        }
-    }
-
+    /**
+     * 限定动画执行状态的传参
+     */
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({STATE_START, STATE_END, STATE_CANCEL, STATE_REPEAT})
     public @interface TimerState {
     }
 
+    /**
+     * 动画执行的状态监听
+     */
     public interface TimerListener {
         void animationState(@TimerState String state);
     }

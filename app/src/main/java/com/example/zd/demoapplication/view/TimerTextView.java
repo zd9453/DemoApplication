@@ -3,7 +3,6 @@ package com.example.zd.demoapplication.view;
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.util.Log;
 
 /**
  * 倒计时的textView
@@ -18,9 +17,13 @@ public class TimerTextView extends AppCompatTextView {
         return timer;
     }
 
+    /**
+     * 文字随时间变化而改变
+     *
+     * @param timer 时间
+     */
     public void setTimer(int timer) {
         this.timer = timer;
-        Log.d("TimerTextView", "setTimer: ---------" + timer);
         setText(timer == 0 ? "跳过" : timer + "s跳过");
         invalidate();
     }
