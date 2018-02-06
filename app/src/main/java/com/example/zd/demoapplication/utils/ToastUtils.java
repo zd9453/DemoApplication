@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.zd.demoapplication.App;
+import com.example.zd.demoapplication.BuildConfig;
 
 
 /**
@@ -22,10 +23,12 @@ public class ToastUtils {
      * @param str 显示内容
      */
     public static void showShortT(String str) {
-        if (!TextUtils.isEmpty(str))
-            Toast.makeText(App.getmContext(), str, Toast.LENGTH_SHORT).show();
-        else
-            Log.d(TAG, "showShortT: ------------ This Toast Is Null Information");
+        if (BuildConfig.DEBUG) {
+            if (!TextUtils.isEmpty(str))
+                Toast.makeText(App.getmContext(), str, Toast.LENGTH_SHORT).show();
+            else
+                Log.d(TAG, "showShortT: ------------ This Toast Is Null Information");
+        }
     }
 
     /**
@@ -34,10 +37,12 @@ public class ToastUtils {
      * @param str 显示的内容
      */
     public static void showLongT(String str) {
-        if (!TextUtils.isEmpty(str))
-            Toast.makeText(App.getmContext(), str, Toast.LENGTH_LONG).show();
-        else
-            Log.d(TAG, "showLongT: ------------ This Toast Is Null Information");
+        if (BuildConfig.DEBUG) {
+            if (!TextUtils.isEmpty(str))
+                Toast.makeText(App.getmContext(), str, Toast.LENGTH_LONG).show();
+            else
+                Log.d(TAG, "showLongT: ------------ This Toast Is Null Information");
+        }
     }
 
 }

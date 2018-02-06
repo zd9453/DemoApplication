@@ -34,10 +34,9 @@ public class TimerViewActivity extends AppCompatActivity implements TimerUtils.T
         switch (state) {
             case STATE_END:
                 if (instance != null) {
-                    instance.stopTimer();
                     instance = null;
+                    finish();
                 }
-                finish();
                 break;
         }
     }
@@ -46,8 +45,6 @@ public class TimerViewActivity extends AppCompatActivity implements TimerUtils.T
     public void onClick(View v) {
         if (instance != null) {
             instance.stopTimer();
-            instance = null;
         }
-        finish();
     }
 }

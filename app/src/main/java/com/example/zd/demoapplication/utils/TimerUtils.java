@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
 import android.support.annotation.StringDef;
+import android.util.Log;
 
 import com.example.zd.demoapplication.view.TimerTextView;
 
@@ -20,6 +21,7 @@ public class TimerUtils implements Animator.AnimatorListener {
     public static final String STATE_END = "onAnimationEnd";//动画结束
     public static final String STATE_CANCEL = "onAnimationCancel";//动画取消
     public static final String STATE_REPEAT = "onAnimationRepeat";//动画重新开始
+    private static final String TAG = "TimerUtils";
 
     private ObjectAnimator objectAnimator;
     private TimerListener timerListener;
@@ -51,7 +53,7 @@ public class TimerUtils implements Animator.AnimatorListener {
      * @param time 倒计时的时长 单位秒（s）
      */
     public void startTimer(TimerTextView view, int time) {
-        ObjectAnimator objectAnimator = ObjectAnimator.ofInt(view, "timer", time, 0);
+        objectAnimator = ObjectAnimator.ofInt(view, "timer", time, 0);
         objectAnimator.setEvaluator(new TextType());
         objectAnimator.setDuration(time * 1000);
         objectAnimator.addListener(this);
@@ -64,9 +66,10 @@ public class TimerUtils implements Animator.AnimatorListener {
     public void stopTimer() {
         if (objectAnimator != null) {
             if (objectAnimator.isRunning()) {
-                objectAnimator.clone();
+                objectAnimator.cancel();
             }
             objectAnimator.addListener(null);
+            objectAnimator = null;
         }
 
         if (timerListener != null) {
@@ -76,6 +79,7 @@ public class TimerUtils implements Animator.AnimatorListener {
 
     @Override
     public void onAnimationStart(Animator animation) {
+        Log.d(TAG, "onAnimationStart: ---------------");
         if (timerListener != null) {
             timerListener.animationState(STATE_START);
         }
@@ -83,6 +87,7 @@ public class TimerUtils implements Animator.AnimatorListener {
 
     @Override
     public void onAnimationEnd(Animator animation) {
+        Log.d(TAG, "onAnimationEnd: ------------------");
         if (timerListener != null) {
             timerListener.animationState(STATE_END);
         }
@@ -90,6 +95,7 @@ public class TimerUtils implements Animator.AnimatorListener {
 
     @Override
     public void onAnimationCancel(Animator animation) {
+        Log.d(TAG, "onAnimationCancel: --------------");
         if (timerListener != null) {
             timerListener.animationState(STATE_CANCEL);
         }
@@ -97,6 +103,7 @@ public class TimerUtils implements Animator.AnimatorListener {
 
     @Override
     public void onAnimationRepeat(Animator animation) {
+        Log.d(TAG, "onAnimationRepeat: ----------------");
         if (timerListener != null) {
             timerListener.animationState(STATE_REPEAT);
         }

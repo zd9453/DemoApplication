@@ -1,10 +1,12 @@
 package com.example.zd.demoapplication;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 
 import com.example.zd.demoapplication.activity.ConstraintLayoutActivity;
 import com.example.zd.demoapplication.activity.CoordinatorLayoutActivity;
@@ -17,12 +19,21 @@ import com.example.zd.demoapplication.activity.TimerViewActivity;
 import com.example.zd.demoapplication.activity.VideoTest2Activity;
 import com.example.zd.demoapplication.activity.VideoTestActivity;
 
+/**
+ * @author zd
+ * @see VideoTest2Activity
+ */
 public class MainJumpActivity extends AppCompatActivity {
 
     private static final String TAG = "MainJumpActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Window window = getWindow();
+        window.setBackgroundDrawableResource(R.drawable.img_test);
+//        View decorView = getWindow().getDecorView();
+//        if (decorView != null)
+//            decorView.setBackgroundColor(Color.parseColor("#ff0000"));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_jump);
     }
@@ -30,7 +41,7 @@ public class MainJumpActivity extends AppCompatActivity {
     /**
      * 协调布局
      *
-     * @param view
+     * @param view .
      */
     public void button1(View view) {
         Intent intent = new Intent(this, CoordinatorLayoutActivity.class);
@@ -40,7 +51,7 @@ public class MainJumpActivity extends AppCompatActivity {
     /**
      * 约束布局
      *
-     * @param view
+     * @param view .
      */
     public void button2(View view) {
         Intent intent = new Intent(this, ConstraintLayoutActivity.class);

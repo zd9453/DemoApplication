@@ -22,6 +22,9 @@ import com.example.zd.demobase.media.MusicDownloadHolder;
 import com.example.zd.demobase.media.MusicPlayService;
 import com.example.zd.demobase.media.MusicReceiver;
 
+/**
+ * @see #onClick(View) {@link #clickMusicDownload()} {@link #clickMusicPlay()} {@link #createService()}
+ */
 public class MediaActivity extends AppCompatActivity implements View.OnClickListener, IDownloadStateListener, IMusicPlayListener {
 
     public static final String URL = "http://mp3.183read.com/582889/58288901.mp3";
@@ -117,6 +120,8 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
 
     /**
      * 创建BroadcastReceiver和service
+     *
+     * @see #clickMusicPlay()
      */
     private void createService() {
         receiver = new MusicReceiver();
@@ -127,22 +132,6 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
         intent.putExtra(MusicPlayService.EXTRA_URL, URL);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
         isBind = true;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        //离开页面时讲回调监听置空，防止再回调更新UI崩溃
-        if (musicDownloadHolder != null) {
-            musicDownloadHolder.setDownloadStateListener(null);
-            musicDownloadHolder = null;
-        }
-
-        if (isBind) {
-            unregisterReceiver(receiver);
-            unbindService(serviceConnection);
-        }
     }
 
     /**
@@ -199,5 +188,21 @@ public class MediaActivity extends AppCompatActivity implements View.OnClickList
         btControl.setImageResource(isPlay ?
                 R.drawable.ic_file_upload_black_24dp :
                 R.drawable.ic_android_black_24dp);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //离开页面时讲回调监听置空，防止再回调更新UI崩溃
+        if (musicDownloadHolder != null) {
+            musicDownloadHolder.setDownloadStateListener(null);
+            musicDownloadHolder = null;
+        }
+
+        if (isBind) {
+            unregisterReceiver(receiver);
+            unbindService(serviceConnection);
+        }
     }
 }

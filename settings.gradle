@@ -1,1 +1,1 @@
-include ':app', ':demobase', ':Common', ':library:WheelPicker', ':library:Common'
+include ':app', ':demobase', ':Common', ':library:WheelPicker', ':library:Common', ':mycontentprovider'

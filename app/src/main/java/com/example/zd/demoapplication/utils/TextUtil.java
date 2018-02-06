@@ -6,11 +6,11 @@ import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.widget.TextView;
 
-/**
- * 文字
- * Created by zhangdong on 2017/12/14 0014.
- */
+import com.example.zd.demoapplication.activity.MediaActivity;
 
+/**
+ * @author zhangdong on 2017/12/14 0014.
+ */
 public class TextUtil {
     /**
      * 设置文字后面跟上图标
@@ -18,6 +18,7 @@ public class TextUtil {
      * @param textView   view
      * @param str        显示的文字
      * @param resourceId 后面图标的id
+     * @see MediaActivity
      */
     public static void setTextEndWithIcon(Context context, TextView textView, String str, int resourceId) {
         ImageSpan imageSpan = new ImageSpan(context, resourceId);

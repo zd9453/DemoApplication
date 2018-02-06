@@ -15,4 +15,8 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="myTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
+
 </resources>
