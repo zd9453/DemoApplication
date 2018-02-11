@@ -15,8 +15,9 @@ import java.lang.annotation.RetentionPolicy;
  * 倒计时工具,用动画实现
  * Created by zhangdong on 2017/12/18 0018.
  */
-
+@SuppressWarnings("all")
 public class TimerUtils implements Animator.AnimatorListener {
+
     public static final String STATE_START = "onAnimationStart";//动画开始
     public static final String STATE_END = "onAnimationEnd";//动画结束
     public static final String STATE_CANCEL = "onAnimationCancel";//动画取消

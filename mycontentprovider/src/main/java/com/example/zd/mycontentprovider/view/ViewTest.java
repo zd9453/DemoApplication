@@ -10,6 +10,7 @@ import android.graphics.Path;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.example.zd.mycontentprovider.R;
@@ -67,6 +68,12 @@ public class ViewTest extends View {
         mPaint.setStrokeCap(Paint.Cap.ROUND);//设置笔夹形状
     }
 
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
 
@@ -88,6 +95,8 @@ public class ViewTest extends View {
 
         //路径裁剪（先裁剪画布再往上绘制）
         canvas.clipPath(path);
+
+        Log.d(TAG, "onDraw: -------- " + getWidth() + " " + getHeight());
 
         //画一层颜色
         canvas.drawColor(Color.parseColor("#cccccc"));
@@ -120,6 +129,10 @@ public class ViewTest extends View {
         mPaint.setStrokeCap(Paint.Cap.SQUARE);
 
         canvas.drawPoint(width / 2, height / 2, mPaint);
+
+        if (isSelected()) {
+            canvas.drawColor(Color.YELLOW);
+        }
 
     }
 }

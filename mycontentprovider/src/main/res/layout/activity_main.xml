@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.example.zd.mycontentprovider.view.ViewTest
+        android:id="@+id/view_test"
         android:layout_width="100dp"
         android:layout_height="80dp"
         app:layout_constraintLeft_toLeftOf="parent"
