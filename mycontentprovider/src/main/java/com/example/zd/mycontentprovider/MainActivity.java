@@ -1,7 +1,6 @@
 package com.example.zd.mycontentprovider;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +9,7 @@ import com.example.zd.mycontentprovider.annitioon.AnnotationUtils;
 import com.example.zd.mycontentprovider.annitioon.FBean;
 import com.example.zd.mycontentprovider.annitioon.TestAnnotation;
 import com.example.zd.mycontentprovider.view.ViewTest;
+import com.example.zd.mycontentprovider.view.WrapContentTextView;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -23,13 +23,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @TestAnnotation()
     int i;
+    private WrapContentTextView textText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TabLayout tabLayout = new TabLayout(this);
+
+        textText = (WrapContentTextView) findViewById(R.id.tv_test);
+//        textText.setWrapContent(true);
+
+        textText.setOnClickListener(this);
+
 
         view = (ViewTest) findViewById(R.id.view_test);
         view.setOnClickListener(this);
@@ -67,8 +73,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 //        view.setSelected(!view.isSelected());
 
-        getInformation();
-
+        switch (view.getId()) {
+            case R.id.tv_test:
+                textText.setWrapContent(!textText.getWrapContent());
+                break;
+            case R.id.view_test:
+                getInformation();
+                break;
+        }
     }
 
     private void getInformation() {
