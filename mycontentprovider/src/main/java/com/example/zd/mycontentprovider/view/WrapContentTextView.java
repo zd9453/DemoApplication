@@ -14,6 +14,7 @@ import com.example.zd.mycontentprovider.R;
 
 /**
  * use to do 如果限定textView的宽度，则根据宽度显示文字,字体变小
+ * 绘制只在居中绘制的样式，其他样式需要自己完善
  *
  * @author zhangdong on 2018/2/11 0011.
  * @version 1.0
@@ -25,7 +26,7 @@ public class WrapContentTextView extends AppCompatTextView {
 
     private static final String TAG = "WrapContentTextView";
     private Paint mPaint;
-    private Boolean isWrapContent = false;//是否开启
+    private Boolean isWrapContent = false;//是否开启根据view的宽高调节字体大小
 
     public void setWrapContent(Boolean wrapContent) {
         isWrapContent = wrapContent;
@@ -56,19 +57,19 @@ public class WrapContentTextView extends AppCompatTextView {
     private void init() {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
+        float density = getResources().getDisplayMetrics().density;
+        Log.d(TAG, "onDraw: ------- 屏幕密度系数density = " + density);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
 
         if (isWrapContent) {
-            CharSequence text = getText();
             int width = getWidth();
             int height = getHeight();
-            Log.d(TAG, "onDraw: --------- width = " + width + "; height = " + height);
+            Log.d(TAG, "onDraw: ------- View的width = " + width + "; View的height = " + height);
 
-            float density = getResources().getDisplayMetrics().density;
-            Log.d(TAG, "onDraw: ------- density = " + density);
+            CharSequence text = getText();
 
             if (!TextUtils.isEmpty(text)) {
                 //文字的字数
@@ -80,7 +81,7 @@ public class WrapContentTextView extends AppCompatTextView {
                 int paddingTop = getPaddingTop();
                 int paddingBottom = getPaddingBottom();
 
-                Log.d(TAG, "onDraw: --- paddingLeft = " + paddingLeft +
+                Log.d(TAG, "onDraw: ------- paddingLeft = " + paddingLeft +
                         "; paddingTop = " + paddingTop +
                         "; paddingRight = " + paddingRight +
                         "; paddingBottom = " + paddingBottom);
@@ -95,33 +96,37 @@ public class WrapContentTextView extends AppCompatTextView {
                 //一个字可绘制的宽度与可绘制的高度取最小的值
                 int textSize = Math.min(oneWidth, textHeight);
 
-                Log.d(TAG, "onDraw: ------ 文字长度：" + length +
-                        "; textWidth = " + textWidth +
+                Log.d(TAG, "onDraw: ------- 文字长度：" + length +
+                        "; 可绘制的textWidth = " + textWidth +
                         "; oneWidth = " + oneWidth +
-                        "; textHeight = " + textHeight);
+                        "; 可绘制的textHeight = " + textHeight);
 
                 //当前文字的size
                 float size = getTextSize();
                 float measureText = getPaint().measureText(text, 0, length);
-                Log.d(TAG, "onDraw: ------- size = " + size + "; measureText = " + measureText);
+                Log.d(TAG, "onDraw: ------- 初始文字的size = " + size +
+                        "; 初始文字的宽measureText = " + measureText);
 
                 //获取当前文章的高度
                 Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
                 float tHeight = fontMetrics.bottom - fontMetrics.top;
 
-                Log.d(TAG, "onDraw: --------- fontMetrics.bottom= " + fontMetrics.bottom
-                        + "; fontMetrics.top= " + fontMetrics.top);
+                Log.d(TAG, "onDraw: ------- 初始文字的fontMetrics.bottom= " + fontMetrics.bottom +
+                        "; 初始文字的fontMetrics.top= " + fontMetrics.top +
+                        "; 初始文字的高度tHeight= " + tHeight);
 
                 float newSize = 0;
                 //新的文字大小根据宽度比例关系得到
                 float newSizeW = size * textSize * length / measureText;
                 //新的文字大小根据高度比例关系得到
                 float newSizeH = size * textHeight / tHeight;
-                Log.d(TAG, "onDraw: ------ newSizeW= " + newSizeW + "; newSizeH= " + newSizeH);
+
+                Log.d(TAG, "onDraw: ------- 根据宽度比例关系得到newSizeW= " + newSizeW +
+                        "; 根据高度比例关系得到newSizeH= " + newSizeH);
 
                 newSize = Math.min(newSizeW, newSizeH);
 
-                Log.d(TAG, "onDraw:  ------- newSize : " + newSize);
+                Log.d(TAG, "onDraw: ------- 取最小的文字大小设置给画笔newSize : " + newSize);
 
                 mPaint.setTextSize(newSize);
                 mPaint.setColor(getCurrentTextColor());
@@ -129,11 +134,21 @@ public class WrapContentTextView extends AppCompatTextView {
                 Rect textRect = new Rect();
                 mPaint.getTextBounds(text.toString(), 0, length, textRect);
 
-                int startX = (width - textRect.width() - paddingLeft - paddingRight) / 2;
-                int startY = height - paddingBottom - (textHeight - textRect.height()) / 2;
+                Paint.FontMetrics mPaintFontMetrics = mPaint.getFontMetrics();
+                float top = mPaintFontMetrics.top;
+                float bottom = mPaintFontMetrics.bottom;
 
-                Log.d(TAG, "onDraw: ---- textRect.width()= " + textRect.width() +
+                //文字绘制的x轴起点
+                int startX = (width - textRect.width() + paddingLeft - paddingRight) / 2;
+
+                //文字绘制的中心
+                int textCenterY = textHeight + paddingTop - textHeight / 2;
+                //文字绘制的基线 BaseLine
+                int startY = (int) (textCenterY - (bottom - top) / 2 - top);
+
+                Log.d(TAG, "onDraw: ------- textRect.width()= " + textRect.width() +
                         "; textRect.height()= " + textRect.height());
+                Log.d(TAG, "onDraw: ------- 绘制的起点：X = " + startX + "; Y = " + startY);
 
                 canvas.drawText(text, 0, length, startX, startY, mPaint);
 

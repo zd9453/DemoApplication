@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         textText = (WrapContentTextView) findViewById(R.id.tv_test);
 //        textText.setWrapContent(true);
+        textText.setText("好的的一个家，哎我大中华");
 
         textText.setOnClickListener(this);
 
