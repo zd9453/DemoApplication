@@ -44,8 +44,10 @@ public class WrapContentTextView extends AppCompatTextView {
 
     public WrapContentTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.WrapContentTextView, 0, 0);
+        TypedArray typedArray =
+                context.getTheme().obtainStyledAttributes(attrs, R.styleable.WrapContentTextView, 0, 0);
         isWrapContent = typedArray.getBoolean(R.styleable.WrapContentTextView_isWrapContent, false);
+        typedArray.recycle();
         init();
     }
 
@@ -151,7 +153,6 @@ public class WrapContentTextView extends AppCompatTextView {
                 Log.d(TAG, "onDraw: ------- 绘制的起点：X = " + startX + "; Y = " + startY);
 
                 canvas.drawText(text, 0, length, startX, startY, mPaint);
-
             }
         } else super.onDraw(canvas);
     }
