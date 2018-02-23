@@ -16,7 +16,7 @@ import com.example.zd.mycontentprovider.R;
  * use to do 如果限定textView的宽度，则根据宽度显示文字,字体变小
  * 绘制只在居中绘制的样式，其他样式需要自己完善
  *
- * @author zhangdong on 2018/2/11 0011.
+ * @author zhangdong on 2018/2/13 0011.
  * @version 1.0
  * @see .
  * @since 1.0

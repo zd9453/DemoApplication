@@ -94,7 +94,7 @@ public class ViewTest extends View {
         path.setFillType(Path.FillType.EVEN_ODD);
 
         //路径裁剪（先裁剪画布再往上绘制）
-        canvas.clipPath(path);
+//        canvas.clipPath(path);
 
         Log.d(TAG, "onDraw: -------- " + getWidth() + " " + getHeight());
 
@@ -125,7 +125,7 @@ public class ViewTest extends View {
                 height / 2 + dpToPx(20),
                 10f, 10f, mPaint);
 
-        mPaint.setStrokeWidth(dpToPx(10));
+        mPaint.setStrokeWidth(dpToPx(5));
         mPaint.setStrokeCap(Paint.Cap.SQUARE);
 
         canvas.drawPoint(width / 2, height / 2, mPaint);

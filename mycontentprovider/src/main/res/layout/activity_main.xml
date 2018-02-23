@@ -6,29 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.example.zd.mycontentprovider.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.example.zd.mycontentprovider.view.ViewTest
         android:id="@+id/view_test"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <com.example.zd.mycontentprovider.view.WrapContentTextView
         android:id="@+id/tv_test"
         android:layout_width="160dp"
         android:layout_height="60dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         android:background="#70000000"
         android:textColor="#ff0000"
         app:isWrapContent="true"
@@ -36,5 +26,24 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="this is test text" />
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="200dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.example.zd.mycontentprovider.view.WrapContentTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#70000000"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="#ff0000"
+            app:isWrapContent="true"
+            tools:text="this is test text" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
