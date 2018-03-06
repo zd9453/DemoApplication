@@ -20,6 +20,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="120dp"
         android:background="#70000000"
+        android:gravity="center"
         android:textColor="#ff0000"
         app:isWrapContent="true"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -45,5 +46,24 @@
             app:isWrapContent="true"
             tools:text="this is test text" />
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <Button
+        android:id="@+id/jump"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Jump"
+        android:onClick="onClick"
+        android:textAllCaps="false" />
 
 </android.support.constraint.ConstraintLayout>
