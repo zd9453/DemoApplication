@@ -1,5 +1,7 @@
 package com.example.zd.playermodel.bean;
 
+import java.io.Serializable;
+
 /**
  * use to do 视频信息
  *
@@ -9,7 +11,7 @@ package com.example.zd.playermodel.bean;
  * @since 1.0
  */
 
-public class MediaBean {
+public class MediaBean implements Serializable {
     private String name;
     private long size;
     private long time;
@@ -84,5 +86,25 @@ public class MediaBean {
                 ", addTime='" + addTime + '\'' +
                 ", type='" + type + '\'' +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
     }
 }

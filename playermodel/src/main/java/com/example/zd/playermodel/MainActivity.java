@@ -2,6 +2,7 @@ package com.example.zd.playermodel;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,16 +24,25 @@ import com.example.zd.playermodel.bean.MediaBean;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MediaAdapter.ItemClickListener {
 
     private static final String TAG = "MainActivity";
 
     private TextView emptyView;
     private RecyclerView dataList;
 
-    private ArrayList<MediaBean> mediaBeens = new ArrayList<>();
+    private ArrayList<MediaBean> mediaBeans = new ArrayList<>();
     private MediaAdapter adapter;
     private Handler handler;
+
+    @Override
+    public void clickItem(int position, MediaBean bean) {
+        Log.d(TAG, "clickItem: ------------- " + position + " ==  " + bean.toString());
+
+        Intent intent = new Intent(this, MediaPlayActivity.class);
+        intent.putExtra(MediaPlayActivity.EXTRA, bean);
+        startActivity(intent);
+    }
 
     private static class MediaHandler extends Handler {
         WeakReference<Activity> weakReference;
@@ -45,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             Activity activity = weakReference.get();
             if (activity != null && activity instanceof MainActivity) {
-                if (((MainActivity) activity).mediaBeens.size() != 0) {
+                if (((MainActivity) activity).mediaBeans.size() != 0) {
                     ((MainActivity) activity).emptyView.setVisibility(View.GONE);
                     ((MainActivity) activity).dataList.setVisibility(View.VISIBLE);
 
@@ -67,10 +77,12 @@ public class MainActivity extends AppCompatActivity {
         dataList = (RecyclerView) findViewById(R.id.recycler_list);
         dataList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        adapter = new MediaAdapter(mediaBeens);
+        adapter = new MediaAdapter(mediaBeans);
         dataList.setAdapter(adapter);
 
         handler = new MediaHandler(this);
+
+        adapter.setItemClickListener(this);
 
         getData();
     }
@@ -96,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                             MediaStore.Video.Media.DURATION,        //时长
                             MediaStore.Video.Media.DATE_ADDED,      //添加日期
                             MediaStore.Video.Media.MIME_TYPE,       //类型
-                            MediaStore.Video.Media.CONTENT_TYPE
                     };
                     Cursor cursor = getContentResolver().query(uri, mediaInfo, null, null, null);
 
@@ -108,12 +119,12 @@ public class MainActivity extends AppCompatActivity {
                         String addTime = cursor.getString(4);
                         String type = cursor.getString(5);
 
-                        mediaBeens.add(new MediaBean(name, size, time, dateUrl, addTime, type));
+                        mediaBeans.add(new MediaBean(name, size, time, dateUrl, addTime, type));
                     }
                     cursor.close();
 
-                    for (int i = 0; i < mediaBeens.size(); i++) {
-                        Log.d(TAG, "run: ----" + mediaBeens.get(i).toString());
+                    for (int i = 0; i < mediaBeans.size(); i++) {
+                        Log.d(TAG, "run: ----" + mediaBeans.get(i).toString());
                     }
 
                     if (handler != null)

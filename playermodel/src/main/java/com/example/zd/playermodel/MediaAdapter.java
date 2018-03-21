@@ -25,6 +25,11 @@ class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.holder> {
 
     private List<MediaBean> lists;
     private SimpleDateFormat dateFormat;
+    private ItemClickListener itemClickListener;
+
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
     public MediaAdapter(List<MediaBean> lists) {
         this.lists = lists;
@@ -38,8 +43,16 @@ class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.holder> {
     }
 
     @Override
-    public void onBindViewHolder(holder holder, int position) {
-        MediaBean mediaBean = lists.get(position);
+    public void onBindViewHolder(holder holder, final int position) {
+        final MediaBean mediaBean = lists.get(position);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != itemClickListener)
+                    itemClickListener.clickItem(position, mediaBean);
+            }
+        });
 
         holder.name.setText(mediaBean.getName());
         holder.time.setText("时长：" + mediaBean.getTime() + "毫秒");
@@ -65,5 +78,9 @@ class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.holder> {
             url = ((TextView) itemView.findViewById(R.id.dateUrl));
             addTime = ((TextView) itemView.findViewById(R.id.addTime));
         }
+    }
+
+    public interface ItemClickListener {
+        void clickItem(int position, MediaBean bean);
     }
 }
